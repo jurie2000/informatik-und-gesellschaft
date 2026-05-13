@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VL 04 – Ethik & Leitlinien | I&G SoSe 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f6f2;--surface:#fff;--border:#e2e0d8;
+  --text:#1a1916;--muted:#6b6860;--hint:#a09d96;
+  --teal:#0f6e56;--teal-light:#e1f5ee;--teal-mid:#1d9e75;--teal-border:#5dcaa5;
+  --orange:#d4521a;--orange-light:#fdf0e8;
+  --amber:#ba7517;--amber-light:#faeeda;
+  --blue:#185fa5;--blue-light:#e6f1fb;
+  --purple:#534ab7;--purple-light:#eeedfe;
+  --red:#a32d2d;--red-light:#fcebeb;
+  --radius:10px;--radius-sm:6px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;padding:20px}
+.widget{max-width:720px;margin:0 auto}
+.header-tag{display:inline-block;font-size:11px;font-weight:500;color:var(--orange);letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:20px;font-weight:500;margin-bottom:2px}
+.subtitle{font-size:13px;color:var(--muted);margin-bottom:18px}
+.nav{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.nav-btn{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.nav-btn.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.nav-btn:hover:not(.active){border-color:var(--teal-border);color:var(--teal)}
+.module{display:none;animation:fadeIn .3s ease}
+.module.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:12px;overflow:hidden}
+.card-head{padding:12px 16px;display:flex;align-items:center;gap:10px}
+.card-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
+.card-title{font-size:13px;font-weight:500}
+.card-body{padding:0 16px 14px}
+.ig{background:#eaf3de;border-left:3px solid #639922;color:#27500a;padding:9px 12px;border-radius:0 6px 6px 0;margin:8px 0;font-size:13px}
+.ia{background:#faeeda;border-left:3px solid #ba7517;color:#633806;padding:9px 12px;border-radius:0 6px 6px 0;margin:8px 0;font-size:13px}
+.ip{background:#f3eaf8;border-left:3px solid #8b44ac;color:#5a1a7a;padding:9px 12px;border-radius:0 6px 6px 0;margin:8px 0;font-size:13px}
+.ir{background:#fcebeb;border-left:3px solid #a32d2d;color:#791f1f;padding:9px 12px;border-radius:0 6px 6px 0;margin:8px 0;font-size:13px}
+.ibl{background:#e6f1fb;border-left:3px solid #185fa5;color:#0c447c;padding:9px 12px;border-radius:0 6px 6px 0;margin:8px 0;font-size:13px}
+.res{border:2px solid #3b6d11;background:#eaf3de;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:13px;color:#27500a}
+.bubble-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.bubble{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;transition:all .2s;text-align:center}
+.bubble:hover,.bubble.open{border-color:var(--teal-border);background:var(--teal-light)}
+.bubble h4{font-size:13px;font-weight:500;margin-bottom:4px}
+.bubble p{font-size:11px;color:var(--muted);display:none;line-height:1.4}
+.bubble.open p{display:block;color:var(--teal)}
+.bubble-icon{font-size:20px;margin-bottom:6px}
+.persp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.persp-card{border-radius:10px;padding:12px;cursor:pointer;border:2px solid transparent;transition:all .2s;text-align:center}
+.persp-card h4{font-size:12px;font-weight:600;margin-bottom:6px}
+.persp-card .icon{font-size:22px;margin-bottom:6px}
+.persp-card p{font-size:11px;color:var(--muted)}
+.persp-card.deon{background:var(--blue-light);border-color:#b5d4f4}
+.persp-card.telo{background:var(--amber-light);border-color:#fac775}
+.persp-card.tuge{background:var(--purple-light);border-color:#cecbf6}
+.persp-card.active{border-color:var(--teal-border)!important;transform:translateY(-2px)}
+.scenario-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin:10px 0}
+.scenario-box h5{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.answer-panel{display:none;margin-top:8px}
+.answer-panel.show{display:block;animation:fadeIn .3s ease}
+.opt-btn{padding:7px 14px;border-radius:8px;border:.5px solid var(--border);background:transparent;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--text);transition:all .15s;margin:4px 4px 4px 0}
+.opt-btn:hover{background:var(--bg)}
+.opt-btn.sel{background:#eaf3de;border-color:#639922;color:#27500a}
+.trolley-svg{width:100%;max-width:500px;display:block;margin:0 auto}
+.dilemma-btns{display:flex;gap:10px;justify-content:center;margin:14px 0;flex-wrap:wrap}
+.d-btn{padding:9px 20px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;color:var(--text)}
+.d-btn:hover{border-color:var(--teal-border);color:var(--teal)}
+.d-btn.chosen-A{background:var(--red-light);border-color:var(--red);color:var(--red)}
+.d-btn.chosen-B{background:var(--teal-light);border-color:var(--teal);color:var(--teal)}
+.timeline{position:relative;padding-left:24px;margin:16px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--border))}
+.tl-item{position:relative;margin-bottom:16px;cursor:pointer}
+.tl-dot{position:absolute;left:-20px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--teal);border:2px solid var(--surface);box-shadow:0 0 0 2px var(--teal);transition:all .2s}
+.tl-head{font-size:13px;font-weight:500}
+.tl-sub{font-size:12px;color:var(--muted)}
+.tl-detail{display:none;margin-top:8px}
+.tl-item.open .tl-detail{display:block;animation:fadeIn .3s ease}
+.tl-item.open .tl-dot{background:var(--orange);box-shadow:0 0 0 2px var(--orange)}
+.mindmap{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
+.mm-tag{padding:6px 13px;border-radius:20px;background:var(--orange);color:#fff;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;border:2px solid transparent}
+.mm-tag:hover{opacity:.85;transform:scale(1.04)}
+.mm-tag.open{border-color:rgba(255,255,255,.6);box-shadow:0 0 0 2px var(--orange)}
+.mm-detail{background:var(--orange-light);border:1px solid #f0c6a8;border-radius:8px;padding:10px 14px;font-size:13px;color:var(--text);margin-top:8px;display:none}
+.mm-detail.show{display:block;animation:fadeIn .3s ease}
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
+.quiz-q h5{font-size:13px;font-weight:500;margin-bottom:10px}
+.quiz-opts{display:flex;flex-direction:column;gap:6px}
+.quiz-opt{padding:8px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;text-align:left;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);transition:all .15px}
+.quiz-opt:hover{background:var(--bg)}
+.quiz-opt.correct{background:#eaf3de;border-color:#639922;color:#27500a}
+.quiz-opt.wrong{background:#fcebeb;border-color:#a32d2d;color:#791f1f}
+.quiz-opt.disabled{pointer-events:none}
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="header-tag">VL 04 · I&amp;G · SoSe 2026</div>
+  <h1>Ethik &amp; Leitlinien in der Informatik</h1>
+  <p class="subtitle">4 interaktive Module · Prof. Dr. Kunau · FH Dortmund</p>
+  <div class="nav">
+    <button class="nav-btn active" onclick="showModule(0)">① Ethik-Grundlagen</button>
+    <button class="nav-btn" onclick="showModule(1)">② 3 Perspektiven</button>
+    <button class="nav-btn" onclick="showModule(2)">③ Dilemma-Lab</button>
+    <button class="nav-btn" onclick="showModule(3)">④ Leitlinien</button>
+  </div>
+  <div class="module active" id="m0">
+    <div class="card">
+      <div class="card-head"><div class="card-num" style="background:#185fa5">1</div><div class="card-title">Was ist Ethik? — Klicke auf ein Konzept</div></div>
+      <div class="card-body">
+        <div class="bubble-grid">
+          <div class="bubble" onclick="toggleBubble(this)"><div class="bubble-icon">⚖️</div><h4>Ethik</h4><p>Lehre vom guten Handeln. Analyse von Moralvorstellungen — nicht der Kodex selbst, sondern die Wissenschaft davon.</p></div>
+          <div class="bubble" onclick="toggleBubble(this)"><div class="bubble-icon">🤝</div><h4>Moral</h4><p>Verhaltenskodex, den eine Gruppe teilt. „Moral hat man, Ethik betreibt man."</p></div>
+          <div class="bubble" onclick="toggleBubble(this)"><div class="bubble-icon">💻</div><h4>Informationsethik</h4><p>Teilgebiet der Ethik. Untersucht moralisches Verhalten bei Erstellung &amp; Nutzung von IT. Themen: Privatsphäre, Cybermobbing, automatische Entscheidungsfindung.</p></div>
+          <div class="bubble" onclick="toggleBubble(this)"><div class="bubble-icon">🌐</div><h4>Digitale Ethik</h4><p>Reflektiert Auswirkungen der Digitalisierung. Fragt: Wie soll moralisches Handeln unter digitalen Bedingungen aussehen?</p></div>
+          <div class="bubble" onclick="toggleBubble(this)"><div class="bubble-icon">🤖</div><h4>Maschinenethik</h4><p>Maschinen als Subjekt der Moral. Wie konstruiert man (teil-)autonome Systeme so, dass sie ethischen Werten folgen?</p></div>
+        </div>
+        <div class="ip" id="asimov" style="display:none"><strong>Asimovs Robotergesetze (1942)</strong><br>1. Kein Schaden an Menschen · 2. Befehle befolgen · 3. Eigene Existenz schützen<br><em>→ Früher Versuch, Maschinenethik zu formalisieren</em></div>
+        <button class="opt-btn" onclick="var a=document.getElementById('asimov');a.style.display=a.style.display==='none'?'block':'none'">💡 Asimovs Robotergesetze zeigen/verbergen</button>
+      </div>
+    </div>
+  </div>
+  <div class="module" id="m1">
+    <div class="card">
+      <div class="card-head"><div class="card-num" style="background:#8b44ac">2</div><div class="card-title">Wähle eine ethische Perspektive</div></div>
+      <div class="card-body">
+        <div class="persp-grid">
+          <div class="persp-card deon" onclick="showPersp('deon')"><div class="icon">📜</div><h4>Deontologisch</h4><p>Pflichtethik · Handlung selbst beurteilen</p></div>
+          <div class="persp-card telo" onclick="showPersp('telo')"><div class="icon">🎯</div><h4>Teleologisch</h4><p>Folgenethik · Ergebnis zählt</p></div>
+          <div class="persp-card tuge" onclick="showPersp('tuge')"><div class="icon">🌱</div><h4>Tugendethik</h4><p>Charakter zählt · Wer bin ich?</p></div>
+        </div>
+        <div class="scenario-box">
+          <h5>Szenario: Eine KI filtert Bewerbungen automatisch</h5>
+          <p style="font-size:12px;color:var(--muted)">→ Klicke oben auf eine Perspektive</p>
+          <div class="answer-panel" id="ans-deon"><div class="ibl"><strong>Deontologisch:</strong> Verstößt ein Algorithmus gegen die Menschenwürde? → Wenn ja: verboten, unabhängig vom Ergebnis.</div><div class="ig">Schlüsselfrage: „Welche KI-Systeme dürfen wir überhaupt entwickeln?"</div></div>
+          <div class="answer-panel" id="ans-telo"><div class="ia"><strong>Teleologisch:</strong> Ist die KI-Filterung effizienter und fairer als Menschen? Positive Konsequenzen → erlaubt.</div><div class="ig">Schlüsselfrage: „Gibt es eine gute Kosten-Nutzen-Relation?"</div></div>
+          <div class="answer-panel" id="ans-tuge"><div class="ip"><strong>Tugendethik:</strong> Handelt ein Unternehmen, das blind auf KI vertraut, tugendhaft? Fairness als Maßstab.</div><div class="ig">Schlüsselfrage: „Welche Tugenden brauchen wir als Informatiker?"</div></div>
+        </div>
+        <div class="ir" id="persp-hint" style="display:none">⚠️ Dieselbe Situation — drei völlig verschiedene Urteile. Das ist das Wesen ethischer Pluralität.</div>
+      </div>
+    </div>
+  </div>
+  <div class="module" id="m2">
+    <div class="card">
+      <div class="card-head"><div class="card-num" style="background:#ba7517">3</div><div class="card-title">Das Trolley-Problem — Triff eine Entscheidung</div></div>
+      <div class="card-body">
+        <div class="ig">Ein echtes <strong>Dilemma</strong> kann nicht aufgelöst, sondern nur <em>entschieden</em> werden. Grundlage sind Werte, die priorisiert werden.</div>
+        <svg class="trolley-svg" viewBox="0 0 500 180" style="margin:12px 0">
+          <line x1="40" y1="110" x2="230" y2="110" stroke="#888" stroke-width="3"/>
+          <path d="M230,110 L380,70" stroke="#888" stroke-width="2.5" fill="none"/>
+          <path d="M230,110 L380,150" stroke="#888" stroke-width="2.5" fill="none"/>
+          <line x1="60" y1="106" x2="60" y2="114" stroke="#666" stroke-width="2"/>
+          <line x1="100" y1="106" x2="100" y2="114" stroke="#666" stroke-width="2"/>
+          <line x1="140" y1="106" x2="140" y2="114" stroke="#666" stroke-width="2"/>
+          <line x1="180" y1="106" x2="180" y2="114" stroke="#666" stroke-width="2"/>
+          <rect x="50" y="90" width="60" height="34" rx="5" fill="#185fa5" opacity=".85"/>
+          <text x="80" y="112" text-anchor="middle" font-size="18" fill="#fff">🚋</text>
+          <circle cx="410" cy="65" r="10" fill="#a32d2d" opacity=".8"/>
+          <text x="410" y="69" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">1</text>
+          <text x="428" y="69" font-size="10" fill="#555" font-family="sans-serif">Person</text>
+          <circle cx="398" cy="148" r="8" fill="#0f6e56" opacity=".8"/>
+          <circle cx="414" cy="148" r="8" fill="#0f6e56" opacity=".8"/>
+          <circle cx="430" cy="148" r="8" fill="#0f6e56" opacity=".8"/>
+          <text x="448" y="152" font-size="10" fill="#555" font-family="sans-serif">5 Personen</text>
+          <circle cx="230" cy="110" r="8" fill="#ba7517"/>
+          <text x="230" y="114" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">⇌</text>
+          <text x="290" y="60" font-size="10" fill="#a32d2d" font-family="sans-serif" font-weight="500">→ Weiche umlegen</text>
+          <text x="290" y="160" font-size="10" fill="#0f6e56" font-family="sans-serif" font-weight="500">→ Nicht eingreifen</text>
+        </svg>
+        <div class="dilemma-btns">
+          <button class="d-btn" id="btnA" onclick="chooseDilemma('A')">Weiche umlegen → 1 Person stirbt</button>
+          <button class="d-btn" id="btnB" onclick="chooseDilemma('B')">Nicht eingreifen → 5 Personen sterben</button>
+        </div>
+        <div id="dilemma-result" style="display:none">
+          <div class="res" id="dilemma-text"></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px"><strong>3 Perspektiven auf deine Wahl:</strong></div>
+          <div id="d-deon" class="ibl" style="margin-top:6px"></div>
+          <div id="d-telo" class="ia" style="margin-top:6px"></div>
+          <div id="d-tuge" class="ip" style="margin-top:6px"></div>
+          <div style="margin-top:12px;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
+            <p style="font-size:12px;font-weight:500;margin-bottom:6px">🤖 Verbindung zur Maschinenethik:</p>
+            <p style="font-size:12px;color:var(--muted)">Autonome Fahrzeuge stehen vor exakt diesem Dilemma. Wer programmiert die Entscheidung — und nach welcher ethischen Perspektive?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="module" id="m3">
+    <div class="card">
+      <div class="card-head"><div class="card-num" style="background:#3b6d11">4</div><div class="card-title">Ethische Leitlinien — Zeitstrahl &amp; Explorer</div></div>
+      <div class="card-body">
+        <div class="ig" style="margin-bottom:10px"><strong>GI</strong> = Gesellschaft für Informatik · größte Fachgesellschaft im deutschsprachigen Raum</div>
+        <div class="timeline">
+          <div class="tl-item" onclick="toggleTl(this)"><div class="tl-dot"></div><div class="tl-head">1994 — Erste ethische Leitlinien</div><div class="tl-sub">GI verabschiedet erstmals verbindliche Leitlinien</div><div class="tl-detail"><div class="ibl">Pionierschritt: Informatiker übernehmen gesellschaftliche Verantwortung. Fokus auf Datenschutz und Systemsicherheit.</div></div></div>
+          <div class="tl-item" onclick="toggleTl(this)"><div class="tl-dot"></div><div class="tl-head">2004 — Überarbeitung der Leitlinien</div><div class="tl-sub">Anpassung an das Internet-Zeitalter</div><div class="tl-detail"><div class="ia">Neue Themen: Netzwerke, globale Systeme, Open Source. Verantwortung gegenüber der Gesellschaft wird stärker betont.</div></div></div>
+          <div class="tl-item" onclick="toggleTl(this)"><div class="tl-dot"></div><div class="tl-head">2018 — Erneute Überarbeitung</div><div class="tl-sub">KI, Big Data, algorithmische Entscheidungen</div><div class="tl-detail"><div class="ip">Aktuelle Version: Fokus auf KI-Ethik, Fairness, Transparenz und Nachvollziehbarkeit.</div></div></div>
+        </div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:14px 0">
+        <p style="font-size:12px;font-weight:500;margin-bottom:10px">Leitlinien des FB Informatik (FH Dortmund) — klicke auf einen Begriff:</p>
+        <div class="mindmap">
+          <span class="mm-tag" onclick="toggleMm(this,'Freiheit')">Freiheit</span>
+          <span class="mm-tag" onclick="toggleMm(this,'Integrität')">Integrität</span>
+          <span class="mm-tag" onclick="toggleMm(this,'Privatsphäre')">Privatsphäre</span>
+          <span class="mm-tag" onclick="toggleMm(this,'Fairness')">Fairness &amp; Chancen</span>
+          <span class="mm-tag" onclick="toggleMm(this,'Zusammenarbeit')">Zusammenarbeit</span>
+          <span class="mm-tag" onclick="toggleMm(this,'International')">International</span>
+          <span class="mm-tag" onclick="toggleMm(this,'Folgen')">Folgen der IT</span>
+          <span class="mm-tag" onclick="toggleMm(this,'Gesundheit')">Gesundheit</span>
+          <span class="mm-tag" onclick="toggleMm(this,'Gleichberechtigung')">Gleichberechtigung</span>
+          <span class="mm-tag" onclick="toggleMm(this,'Arbeitskultur')">Arbeitskultur</span>
+        </div>
+        <div class="mm-detail" id="mm-detail-box"></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:14px 0">
+        <p style="font-size:12px;font-weight:500;margin-bottom:10px">Mini-Quiz — teste dein Wissen:</p>
+        <div class="quiz-q" id="q1"><h5>Wann wurden die GI-Leitlinien zuletzt überarbeitet?</h5><div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this,'q1',false)">2004</button><button class="quiz-opt" onclick="checkQuiz(this,'q1',true)">2018</button><button class="quiz-opt" onclick="checkQuiz(this,'q1',false)">2022</button></div></div>
+        <div class="quiz-q" id="q2"><h5>Was untersucht die Maschinenethik?</h5><div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this,'q2',false)">Moral der Nutzer gegenüber Maschinen</button><button class="quiz-opt" onclick="checkQuiz(this,'q2',true)">Wie Maschinen selbst ethisch handeln können</button><button class="quiz-opt" onclick="checkQuiz(this,'q2',false)">Reparatur defekter Algorithmen</button></div></div>
+        <div class="quiz-q" id="q3"><h5>„Handlungen nach ihren Folgen beurteilen" — welche Ethik ist das?</h5><div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this,'q3',false)">Deontologische Ethik</button><button class="quiz-opt" onclick="checkQuiz(this,'q3',false)">Tugendethik</button><button class="quiz-opt" onclick="checkQuiz(this,'q3',true)">Teleologische Ethik</button></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const mmData={'Freiheit':'Informatiker sollen Systeme gestalten, die Nutzerfreiheit fördern. Keine unnötige Überwachung.','Integrität':'Ehrlichkeit in Arbeit und Kommunikation. Keine Täuschung über Systemfähigkeiten.','Privatsphäre':'Datenschutz als Grundrecht. IT-Systeme müssen Privacy by Design berücksichtigen.','Fairness':'Gleiche Chancen unabhängig von Herkunft, Geschlecht, Alter. Algorithmen dürfen keine Diskriminierung verstärken.','Zusammenarbeit':'Teamarbeit und interdisziplinärer Austausch. Informatik löst gesellschaftliche Probleme nie allein.','International':'Globale Perspektive. Systeme wirken weltweit — kulturelle Unterschiede berücksichtigen.','Folgen':'Informatiker tragen Verantwortung für gesellschaftliche Folgen ihrer Systeme — auch unbeabsichtigte.','Gesundheit':'Physische und psychische Gesundheit der Nutzer beachten. Keine Dark Patterns.','Gleichberechtigung':'Barrierefreiheit und inklusive Gestaltung. IT soll niemanden ausgrenzen.','Arbeitskultur':'Respektvolles Miteinander im Team. Psychologische Sicherheit als Voraussetzung.'}
+function showModule(n){document.querySelectorAll('.module').forEach((m,i)=>m.classList.toggle('active',i===n));document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));}
+function toggleBubble(el){el.classList.toggle('open')}
+function showPersp(p){document.querySelectorAll('.persp-card').forEach(c=>c.classList.remove('active'));document.querySelector('.persp-card.'+p).classList.add('active');document.querySelectorAll('.answer-panel').forEach(a=>a.classList.remove('show'));document.getElementById('ans-'+p).classList.add('show');document.getElementById('persp-hint').style.display='block';}
+function chooseDilemma(choice){document.getElementById('btnA').className='d-btn'+(choice==='A'?' chosen-A':'');document.getElementById('btnB').className='d-btn'+(choice==='B'?' chosen-B':'');document.getElementById('dilemma-result').style.display='block';if(choice==='A'){document.getElementById('dilemma-text').innerHTML='Du hast <strong>die Weiche umgelegt</strong>. Eine Person stirbt, fünf werden gerettet.';document.getElementById('d-deon').innerHTML='<strong>Deontologisch:</strong> Du hast aktiv gehandelt und eine Person getötet — moralisch problematisch, unabhängig vom Ergebnis.';document.getElementById('d-telo').innerHTML='<strong>Teleologisch:</strong> 5 Leben > 1 Leben → die Handlung maximiert den Nutzen. Utilitaristisch richtig.';document.getElementById('d-tuge').innerHTML='<strong>Tugendethik:</strong> Zeigt deine Entscheidung Mut und Verantwortungsbewusstsein — oder Kaltblütigkeit?';}else{document.getElementById('dilemma-text').innerHTML='Du hast <strong>nicht eingegriffen</strong>. Fünf Personen sterben, eine überlebt.';document.getElementById('d-deon').innerHTML='<strong>Deontologisch:</strong> Keine aktive Tötungshandlung — könnte als moralisch akzeptabler gelten.';document.getElementById('d-telo').innerHTML='<strong>Teleologisch:</strong> 5 Tote > 1 Toter → das schlechteste Ergebnis. Utilitaristisch falsch.';document.getElementById('d-tuge').innerHTML='<strong>Tugendethik:</strong> Passivität angesichts von Leid — ist das feige oder respektvoll gegenüber dem Schicksal?';}}
+function toggleTl(el){el.classList.toggle('open')}
+function toggleMm(el,key){const open=el.classList.contains('open');document.querySelectorAll('.mm-tag').forEach(t=>t.classList.remove('open'));const box=document.getElementById('mm-detail-box');if(open){box.classList.remove('show');box.textContent='';return;}el.classList.add('open');box.textContent=mmData[key];box.classList.add('show');}
+function checkQuiz(btn,qid,correct){const q=document.getElementById(qid);q.querySelectorAll('.quiz-opt').forEach(b=>{b.classList.add('disabled');if(b===btn)b.classList.add(correct?'correct':'wrong');});}
+</script>
+</body>
+</html>
